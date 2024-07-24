@@ -6,11 +6,12 @@ public:
         }
         int min_stock=INT_MAX;
         int profit=0;
-        for(int i=0;i<prices.size();i++){
-            int diff=prices[i]-min_stock;
-            profit=max(profit,diff);
-            min_stock=min(min_stock,prices[i]);
-            
+        for (int price : prices) {
+            if (price < min_stock) {
+                min_stock = price; // Update min_stock if current price is lower
+            } else {
+                profit = max(profit, price - min_stock); // Calculate potential profit
+            }
         }
         return profit;
         
