@@ -6,10 +6,7 @@ public:
         for(int i=0;i<nums.size() && i<=maxDistance;i++){
             maxDistance=max(nums[i]+i,maxDistance);
         }
-        if(maxDistance>=target){
-            return true;
-        }
-        return false;
+        return maxDistance >=target;
 
     }
 };
