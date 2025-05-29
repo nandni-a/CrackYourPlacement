@@ -1,66 +1,43 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
   public:
-    bool dfs(int node,int parent,vector<bool> &visited,vector<vector<int>>& adj){
-        visited[node]=true;
-        for(auto neighbour:adj[node]){
-            if(!visited[neighbour]){
-                if(dfs(neighbour,node,visited,adj)){
+    bool bfs(int src ,unordered_map<int,list<int>>&adj,vector<int>&vis ){
+        vis[src]=1;
+        queue<pair<int,int>>q;
+        q.push({src,-1});
+        while(!q.empty()){
+            int node=q.front().first;
+            int parent=q.front().second;
+            q.pop();
+            
+            for(auto neigh:adj[node]){
+                if(!vis[neigh]){
+                    vis[neigh]=1;
+                    q.push({neigh,node});
+                }
+                else if(neigh!=parent){
                     return true;
                 }
-            }
-            else if(neighbour!=parent){
-                return true;
-                
             }
         }
         return false;
     }
-    // Function to detect cycle in an undirected graph.
-    bool isCycle(vector<vector<int>>& adj) {
-        int v=adj.size();
-        vector<bool> visited(v,false);
-        for(int i=0;i<v;i++){
-            if(!visited[i]){
-                if(dfs(i,-1,visited,adj)){
-                    return true;
-                }
-            }
-        }
-        return false;
+    bool isCycle(int V, vector<vector<int>>& edges) {
         // Code here
-    }
-};
-
-//{ Driver Code Starts.
-int main() {
-    int tc;
-    cin >> tc;
-    while (tc--) {
-        int V, E;
-        cin >> V >> E;
-        vector<vector<int>> adj(V);
-        for (int i = 0; i < E; i++) {
-            int u, v;
-            cin >> u >> v;
+        unordered_map<int,list<int>>adj;
+        for(auto i:edges){
+            int u=i[0];
+            int v=i[1];
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-        Solution obj;
-        bool ans = obj.isCycle(adj);
-        if (ans)
-            cout << "1\n";
-        else
-            cout << "0\n";
-
-        cout << "~"
-             << "\n";
+        vector<int>vis(V,0);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(bfs(i,adj,vis)==true){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
-    return 0;
-}
-// } Driver Code Ends
+};
