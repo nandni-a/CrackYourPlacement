@@ -1,41 +1,33 @@
 class Solution {
   public:
-    void bfs(int row,int col,vector<vector<int>>& vis,vector<vector<char>>& grid){
-        vis[row][col] = 1;
-        queue<pair<int, int>> q;
-        int n = grid.size();
-        int m = grid[0].size();
-        q.push({row, col});
-        int delRow[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int delCol[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+    vector<vector<int>>dir={{-1,-1},{1,-1},{-1,1},{1,1},{0,1},{1,0},{-1,0},{0,-1}};
     
-        while (!q.empty()) {
-            int r = q.front().first;
-            int c = q.front().second;
-            q.pop();
-    
-            for (int i = 0; i < 8; i++) {
-                int nrow = r + delRow[i];
-                int ncol = c + delCol[i];
-                if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m &&
-                    grid[nrow][ncol] == 'L' && !vis[nrow][ncol]) {
-                    vis[nrow][ncol] = 1;
-                    q.push({nrow, ncol});
-                }
+    void dfs(int i,int j,vector<vector<int>>&vis,vector<vector<char>>& grid){
+        int m=grid.size();
+        int n=grid[0].size();
+        vis[i][j]=1;
+        for(auto d:dir){
+            int nr=i+d[0];
+            int nc=j+d[1];
+            if(nr>=0 && nc>=0 && nr<m && nc<n && grid[nr][nc]=='L' && !vis[nr][nc]){
+                dfs(nr,nc,vis,grid);
+                
             }
         }
+        
     }
+    
     int countIslands(vector<vector<char>>& grid) {
         // Code here
-        int n=grid.size();
-        int m=grid[0].size();
+        int m=grid.size();
+        int n=grid[0].size();
+        vector<vector<int>>vis(m,vector<int>(n,0));
         int cnt=0;
-        vector<vector<int>>vis(n,vector<int>(m,0));
-        for(int row=0;row<n;row++){
-            for(int col=0;col<m;col++){
-                if(!vis[row][col] && grid[row][col]=='L' ){
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]=='L' && !vis[i][j]){
+                    dfs(i,j,vis,grid);
                     cnt++;
-                    bfs(row,col,vis,grid);
                 }
             }
         }
