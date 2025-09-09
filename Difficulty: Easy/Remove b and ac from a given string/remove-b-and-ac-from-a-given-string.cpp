@@ -1,0 +1,23 @@
+
+class Solution {
+  public:
+    string stringFilter(string str) {
+        // code here.
+        string ans = "";
+        int i = 0;
+        int n = str.length();
+        while(i < n){
+            if(str[i] == 'b'){
+                i++;
+                continue;
+            }
+            else if(str[i] == 'a' && i+1<n && str[i+1] == 'c'){
+                i+=2;
+                continue;
+            }
+            ans+=str[i];
+            i++;
+        }
+        return ans;
+    }
+};
