@@ -1,21 +1,35 @@
-int findCeil(Node* root, int input) {
-    // Your code here
-    int ceil=-1;
-    while(root){
-        if(root->data ==input){
-            ceil=root->data;
-            return ceil;
-        }
-        else if(root->data >input ){
-            ceil=root->data;
-            root=root->left;
-        }
-        else{
-            root=root->right;
-        }
+/*
+Definition for Node
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = right = nullptr;
     }
-    return ceil;
-    
-    
-    
-}
+};
+*/
+
+class Solution {
+  public:
+    int findCeil(Node* root, int x) {
+        // code here
+        int ans=-1;
+        while(root){
+            if(root->data ==x){
+                return root->data;
+            }
+            else if(root->data > x){
+                ans=root->data;
+                root=root->left;
+            }
+            else{
+                root=root->right;
+            }
+        }
+        return ans;
+    }
+};
