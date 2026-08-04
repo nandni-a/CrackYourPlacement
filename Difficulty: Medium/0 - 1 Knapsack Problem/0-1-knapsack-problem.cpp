@@ -1,32 +1,26 @@
 class Solution {
   public:
-    int solve(int ind,int cap,vector<int>&val,vector<int>&wt,vector<vector<int>>&dp){
-        int n=val.size();
-        if(ind==n-1){
-            if(wt[ind]<=cap){
-                return val[ind];
-            }
-            else{
-                return 0;
-            }
+    int solve(int i,int w,vector<int> &val, vector<int> &wt,vector<vector<int>>&dp){
+        if(i==0){
+            if(wt[0]<=w) return val[0];
+            else return 0;
+        }
+        if(dp[i][w]!=-1){
+            return dp[i][w];
         }
         
-        if(ind>=n) return 0;
-        if(dp[ind][cap]!=-1){
-            return dp[ind][cap];
-        }
+        int nottake= 0 + solve(i-1,w,val,wt,dp);
         int take=INT_MIN;
-        int notTake=solve(ind+1,cap,val,wt,dp);
-        if(wt[ind]<=cap){
-            take= val[ind]+solve(ind+1,cap-wt[ind],val,wt,dp);
+        if(wt[i]<=w){
+            take = val[i]+ solve(i-1,w-wt[i],val,wt,dp);
         }
-        return dp[ind][cap]=max(take,notTake);
+        return dp[i][w]=max(take,nottake);
     }
     int knapsack(int W, vector<int> &val, vector<int> &wt) {
-        int n=val.size();
         // code here
-        vector<vector<int>>dp(n+1,vector<int>(W+1,-1));
-        return solve(0,W,val,wt,dp);
+        int n=val.size();
+        vector<vector<int>>dp(n,vector<int>(W+1,-1));
+        return solve(n-1,W,val,wt,dp);
         
     }
 };
