@@ -1,13 +1,13 @@
 class Solution {
   public:
-    int f(int i,int j,vector<int> &arr,vector<vector<int>>&dp){
+    int solve(int i,int j,vector<int> &arr,vector<vector<int>>&dp){
         if(i==j) return 0;
         if(dp[i][j]!=-1){
             return dp[i][j];
         }
-        int mini=1e9;
-        for(int k=i;k<=j-1;k++){
-            int steps=(arr[i-1]*arr[k]*arr[j]) + f(i,k,arr,dp) + f(k+1,j,arr,dp);
+        int mini=INT_MAX;
+        for(int k=i;k<j;k++){
+            int steps= arr[i-1]*arr[k]*arr[j] + solve(i,k,arr,dp) + solve(k+1,j,arr,dp);
             mini=min(mini,steps);
         }
         return dp[i][j]=mini;
@@ -15,8 +15,8 @@ class Solution {
     int matrixMultiplication(vector<int> &arr) {
         // code here
         int n=arr.size();
-        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
-        return f(1,n-1,arr,dp);
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        return solve(1,arr.size()-1,arr,dp);
         
     }
 };
