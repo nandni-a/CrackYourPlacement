@@ -1,27 +1,27 @@
-/*
-class DLLNode {
+/* Structure of Doubly Linked List Node
+class Node {
   public:
     int data;
-    DLLNode *next;
-    DLLNode *prev;
+    Node *next;
+    Node *prev;
 
-    DLLNode(int val) {
+    Node(int val) {
         data = val;
-        this->next = NULL;
-        this->prev = NULL;
+        next = nullptr;
+        prev = nullptr;
     }
 };
+
 */
 class Solution {
   public:
-    // Function to reverse a doubly linked list
-    DLLNode* reverseDLL(DLLNode* head) {
-        // Your code here
-        if(head==NULL || head->next==NULL){
+    Node *reverse(Node *head) {
+        // code here
+       if(head==NULL || head->next==NULL){
             return head;
         }
-        DLLNode* last=NULL;
-        DLLNode*current=head;
+        Node* last=NULL;
+        Node*current=head;
         while(!current==NULL){
             last=current->prev;
             current->prev=current->next;
