@@ -3,14 +3,13 @@ class Solution {
     int longestSubarray(vector<int>& a, int k) {
         // code here
         map<long long ,int > mp;
+        mp[0]=-1;
         long long sum=0;
         int ans=0;
     
         for(int i=0;i<a.size();i++){
             sum+=a[i];
-            if(sum==k){
-                ans=max(ans,i+1);
-            }
+            
             long long rem=sum-k;
             if(mp.find(rem)!=mp.end()){
                 int len = i-mp[rem];
