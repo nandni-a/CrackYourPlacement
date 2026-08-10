@@ -5,20 +5,18 @@ class Solution {
         int l=0;
         int n=arr.size();
         int r=n-1;
-        int lMax=0;
-        int rMax=0;
+        int lmax=0;
+        int rmax=0;
         int ans=0;
         while(l<r){
-            lMax=max(lMax,arr[l]);
-            rMax=max(rMax,arr[r]);
-            if(arr[l]<arr[r]){
-                
-                ans+= lMax-arr[l];
+            lmax=max(lmax,arr[l]);
+            rmax=max(rmax,arr[r]);
+            if(arr[l]<=arr[r]){
+                ans+= lmax-arr[l];
                 l++;
             }
             else{
-                
-                ans+= rMax-arr[r];
+                ans+= rmax-arr[r];
                 r--;
             }
         }
